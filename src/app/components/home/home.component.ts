@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class AppComponent implements OnInit {
-  title = 'MS Onboarding Portal - Accolite';
+export class HomeComponent implements OnInit {
+
+  private title = "MS Onboarding Portal - Home";
 
   constructor(private titleService: Title) { }
 
@@ -17,5 +17,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setTitle();
   }
+
 }
