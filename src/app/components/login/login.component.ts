@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
 import { SessionStorageService } from 'ngx-webstorage';
 import { LoginService } from 'src/app/service/login.service';
+import { UserlogsService } from 'src/app/service/userlogs.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +22,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private sessionStorage: SessionStorageService,
     private loginService: LoginService,
+    private userLogService: UserlogsService,
     private titleService: Title,
   ) { }
 
@@ -39,9 +42,19 @@ export class LoginComponent implements OnInit {
     this.loginService.basicAuth(this.username, this.password).subscribe((data) => {
       console.log(data);
       if(data !== []) {
-        this.sessionStorage.store("loggedIn", true);
-        this.sessionStorage.store("user", data);
-        this.router.navigate(['/home']);
+        this.user = data[0];
+        var userLog = {
+          "uid": 1,
+          "userName": this.user.firstName + " " + this.user.lastName,
+          "description": "Login to Portal!",
+          "createdAt": new Date()
+        };
+
+        this.userLogService.addLoginLog(userLog, this.user.uid).subscribe(() => {
+          this.sessionStorage.store("loggedIn", true);
+          this.sessionStorage.store("user", this.user);
+          this.router.navigate(['/home']);
+        });
       } else {
         this.sessionStorage.store("loggedIn", false);
         this.router.navigate(['/']);
@@ -58,11 +71,56 @@ export class LoginComponent implements OnInit {
       platform = GoogleLoginProvider.PROVIDER_ID;
       this.authService.signIn(platform).then(
         (response) => {
-          console.log(platform + " logged in user data is= " , response);
-          this.user = response;
-          this.sessionStorage.store("loggedIn", true);
-          this.sessionStorage.store("user", this.user);
-          this.router.navigate(['/home']);
+          console.log(platform + " logged in user data is= ", response);
+          this.loginService.searchEmail(response.email).subscribe((data) => {
+            if(data !== []) {
+              this.user = data[0];
+              var userLog = {
+                "uid": 1,
+                "userName": this.user.firstName + " " + this.user.lastName,
+                "description": "Login to Portal!",
+                "createdAt": new Date()
+              };
+      
+              this.userLogService.addLoginLog(userLog, this.user.uid).subscribe(() => {
+                this.sessionStorage.store("loggedIn", true);
+                this.sessionStorage.store("user", this.user);
+                this.router.navigate(['/home']);
+              });
+            } else {
+
+              this.user = {
+                "uid": 1,
+                "firstName": response.firstName,
+                "lastName": response.lastName,
+                "webLoginId": response.email,
+                "password": response.authToken,
+                "failedLoginAttempt": 0,
+                "lastLoginAt": null,
+                "createdAt": null,
+                "updateAt": null,
+                "currentOffice": "Mumbai",
+                "role": "MANAGER"
+              }
+
+              this.loginService.addUser(this.user).subscribe((newUser) => {
+                this.user = newUser;
+                var userLog = {
+                  "uid": 1,
+                  "userName": this.user.firstName + " " + this.user.lastName,
+                  "description": "Login to Portal!",
+                  "createdAt": new Date()
+                };
+        
+                this.userLogService.addLoginLog(userLog, this.user.uid).subscribe(() => {
+                  this.sessionStorage.store("loggedIn", true);
+                  this.sessionStorage.store("user", this.user);
+                  this.router.navigate(['/home']);
+                });
+              });
+            }
+            
+          });
         }
       );
     }

@@ -26,6 +26,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { OnboardeeComponent } from './components/onboardee/onboardee.component';
+import { UserLogsComponent } from './components/user-logs/user-logs.component';
 
 const google_oauth_client_id:string = '833115512170-mh1qim32kmkcqv8c2gqtqvgu7no1q7qj.apps.googleusercontent.com';
 let config = new AuthServiceConfig([
@@ -45,7 +47,9 @@ export function provideConfig() {
     AppComponent,
     HomeComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    OnboardeeComponent,
+    UserLogsComponent
   ],
   imports: [
     BrowserModule,

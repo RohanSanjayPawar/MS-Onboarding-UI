@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +10,14 @@ export class LoginService {
 
   googleLogin() {
     return this.http.get("http://localhost:4200/api/restricted");
+  }
+
+  searchEmail(email: String) {
+    return this.http.get("http://localhost:4200/api/user/"+email);
+  }
+
+  addUser(user: any)  {
+    return this.http.put("http://localhost:4200/api/user/add", user);
   }
 
   basicAuth(username, password) {

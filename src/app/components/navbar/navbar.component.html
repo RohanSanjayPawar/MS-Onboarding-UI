@@ -4,6 +4,8 @@
         <span class="example-spacer"></span>
         <div>
             <a mat-button [routerLink]="'/home'">ABOUT US</a>
+            <a *ngIf="isLoggedIn" mat-button [routerLink]="'/user-logs'">MY LOGS</a>
+            <a *ngIf="isLoggedIn" mat-button [routerLink]="'/onboardee'">ONBOARDEE</a>
             <a *ngIf="!isLoggedIn" mat-button [routerLink]="'/login'">LOGIN</a>
             <a *ngIf="isLoggedIn" mat-button (click) = "signOut()">LOGOUT</a>
         </div>
