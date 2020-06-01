@@ -1,13 +1,13 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-        <a mat-button class="home-button" [routerLink]="'/'"><h1>MS ONBOARDING</h1></a>
+        <a mat-button class="home-button" [routerLink]="'/home'"><h1>MS ONBOARDING</h1></a>
         <span class="example-spacer"></span>
         <div>
-            <a mat-button [routerLink]="'/home'">ABOUT US</a>
-            <a *ngIf="isLoggedIn" mat-button [routerLink]="'/user-logs'">MY LOGS</a>
-            <a *ngIf="isLoggedIn" mat-button [routerLink]="'/onboardee'">ONBOARDEE</a>
-            <a *ngIf="!isLoggedIn" mat-button [routerLink]="'/login'">LOGIN</a>
-            <a *ngIf="isLoggedIn" mat-button (click) = "signOut()">LOGOUT</a>
+            <a class="nav-text" *ngIf="isLoggedIn" mat-button [routerLink]="'/onboardee'">ONBOARDEE</a>
+            <a class="nav-text" *ngIf="isLoggedIn" mat-button [routerLink]="'/trends'">TRENDS</a>
+            <a class="nav-text" *ngIf="isLoggedIn" mat-button [routerLink]="'/user-logs'">MY LOGS</a>
+            <a class="nav-text" *ngIf="!isLoggedIn" mat-button [routerLink]="'/login'">LOGIN</a>
+            <a class="nav-text" *ngIf="isLoggedIn" mat-button (click) = "signOut()">LOGOUT</a>
         </div>
     </mat-toolbar-row>
 </mat-toolbar>

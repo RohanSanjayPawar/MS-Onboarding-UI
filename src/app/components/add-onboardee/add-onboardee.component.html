@@ -1,0 +1,96 @@
+<h3 *ngIf="!edit && demand">ADD ONBOARDEE</h3>
+<h3 *ngIf="!edit && !demand">CHOOSE DEMAND FOR ONBOARDEE</h3>
+<h3 *ngIf="edit">EDIT ONBOARDEE</h3>
+
+<div mat-dialog-content>
+  <mat-card class="example-card">
+    <mat-card-content>
+      <form class="example-form">
+        <table class="example-full-width" cellspacing="0">
+          <tr *ngIf="demand">
+            <td>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="First name" [(ngModel)]="data.firstName" name="firstName" required>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Last name" [(ngModel)]="data.lastName" name="lastName" required>
+              </mat-form-field>
+            </td>
+          </tr>
+          <br>
+          <tr *ngIf="demand">
+            <td>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Email" [(ngModel)]="data.webLoginId" name="webLoginId" required>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Experience" [(ngModel)]="data.experience" name="experience" required>
+              </mat-form-field>
+            </td>
+          </tr>
+          <br>
+          <tr *ngIf="demand">
+            <td>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Status" [(ngModel)]="data.status" name="status" required>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Background Check Status" [(ngModel)]="data.backgroundCheckStatus"
+                  name="bgStatus" required>
+              </mat-form-field>
+            </td>
+          </tr>
+          <br>
+          <tr *ngIf="demand">
+            <td>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="ETA for onboarding" [(ngModel)]="data.etaForOnboarding"
+                  name="etaForOnboarding" required>
+              </mat-form-field>
+            </td>
+          </tr>
+          <br>
+          <tr *ngIf="!edit && demand">
+            <td>
+              <mat-label>Skills</mat-label>
+              <br><br>
+              <section class="example-section">
+                <mat-checkbox class="example-margin" [(ngModel)]="angular" name="angular">Angular</mat-checkbox>
+                <mat-checkbox class="example-margin" [(ngModel)]="java" name="java">Java</mat-checkbox>
+                <mat-checkbox class="example-margin" [(ngModel)]="spring" name="spring">Spring</mat-checkbox>
+                <mat-checkbox class="example-margin" [(ngModel)]="projectManager" name="projectManager">Project Manager
+                </mat-checkbox>
+              </section>
+            </td>
+          </tr>
+          <br>
+          <tr *ngIf="!edit && !demand">
+            <td>
+              <mat-form-field class="example-full">
+                <mat-label>Demand</mat-label>
+                <mat-select [(ngModel)]="demandSelected" name="demand">
+                  <mat-option *ngFor="let demand of demands" [value]="demand.uid">
+                    {{demand.role}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="footer" mat-dialog-actions>
+  <button *ngIf="!edit && !demand" mat-raised-button (click)="goBack()" color="primary">GO BACK</button>
+  <button *ngIf="!edit && demand" mat-raised-button (click)="findDemand()" color="primary">FIND DEMAND</button>
+  <button *ngIf="!edit && !demand" mat-raised-button (click)="addOnboardee()" color="primary">ADD</button>
+  <button *ngIf="edit" mat-raised-button (click)="editOnboardee()" color="primary">EDIT</button>
+  <button mat-raised-button (click)="close()">CANCEL</button>
+</div>

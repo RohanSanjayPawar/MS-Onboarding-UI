@@ -13,9 +13,14 @@ import {
   MatGridListModule, 
   MatDialogModule, 
   MatTableModule,
-  MatMenuModule } from '@angular/material';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { FormsModule } from '@angular/forms';
+  MatMenuModule,
+  MatFormFieldModule, 
+  MatOptionModule, 
+  MatSelectModule,
+  MatCheckboxModule,
+  MatTabsModule,
+  MatListModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
 import { NgxWebstorageModule } from 'ngx-webstorage';
@@ -28,6 +33,10 @@ import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { OnboardeeComponent } from './components/onboardee/onboardee.component';
 import { UserLogsComponent } from './components/user-logs/user-logs.component';
+import { AddOnboardeeComponent } from './components/add-onboardee/add-onboardee.component';
+import { TrendsComponent } from './components/trends/trends.component';
+import { BarChartComponent } from './components/trends/bar-chart/bar-chart.component';
+import { ProfileChartComponent } from './components/trends/profile-chart/profile-chart.component';
 
 const google_oauth_client_id:string = '833115512170-mh1qim32kmkcqv8c2gqtqvgu7no1q7qj.apps.googleusercontent.com';
 let config = new AuthServiceConfig([
@@ -49,25 +58,35 @@ export function provideConfig() {
     LoginComponent,
     NavbarComponent,
     OnboardeeComponent,
-    UserLogsComponent
+    UserLogsComponent,
+    AddOnboardeeComponent,
+    TrendsComponent,
+    BarChartComponent,
+    ProfileChartComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatInputModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatSortModule,
     MatIconModule,
+    MatTabsModule,
     MatButtonModule,
     MatCardModule,
     MatDialogModule, 
     MatTableModule,
+    MatListModule,
     MatMenuModule,
     MatGridListModule,
+    MatCheckboxModule,
     MatToolbarModule,
-    MatSidenavModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatOptionModule,
     FormsModule,
     HttpClientModule,
     SocialLoginModule,
@@ -80,6 +99,9 @@ export function provideConfig() {
       useFactory: provideConfig
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    AddOnboardeeComponent
+  ]
 })
 export class AppModule { }

@@ -6,7 +6,7 @@ import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
 import { SessionStorageService } from 'ngx-webstorage';
 import { LoginService } from 'src/app/service/login.service';
 import { UserlogsService } from 'src/app/service/userlogs.service';
-import { ThrowStmt } from '@angular/compiler';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -30,16 +30,22 @@ export class LoginComponent implements OnInit {
     this.titleService.setTitle(this.title);
   }
 
-  username: string;
-  password: string;
+  username: any;
+  password: any;
+
+  user_data: any;
 
   ngOnInit() {
     this.user = this.sessionStorage.retrieve("user");
+    
+    this.username = new FormControl('', Validators.compose([Validators.email, Validators.required, Validators.minLength(5)]));
+    this.password = new FormControl('', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(20)]))
+    
     this.setTitle();
   }
 
   login() {
-    this.loginService.basicAuth(this.username, this.password).subscribe((data) => {
+    this.loginService.basicAuth(this.username.value, this.password.value).subscribe((data) => {
       console.log(data);
       if(data !== []) {
         this.user = data[0];
@@ -47,13 +53,14 @@ export class LoginComponent implements OnInit {
           "uid": 1,
           "userName": this.user.firstName + " " + this.user.lastName,
           "description": "Login to Portal!",
-          "createdAt": new Date()
+          "createdAt": new Date().toISOString().substring(0, 19)
         };
+        console.log(userLog.createdAt);
 
         this.userLogService.addLoginLog(userLog, this.user.uid).subscribe(() => {
           this.sessionStorage.store("loggedIn", true);
           this.sessionStorage.store("user", this.user);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/onboardee']);
         });
       } else {
         this.sessionStorage.store("loggedIn", false);
@@ -66,7 +73,7 @@ export class LoginComponent implements OnInit {
   singIn(platform : string) {
     if(this.sessionStorage.retrieve("loggedIn")) {
       this.user = this.sessionStorage.retrieve("user");
-      this.router.navigate(['/home']);
+      this.router.navigate(['/onboardee']);
     } else {
       platform = GoogleLoginProvider.PROVIDER_ID;
       this.authService.signIn(platform).then(
@@ -79,13 +86,14 @@ export class LoginComponent implements OnInit {
                 "uid": 1,
                 "userName": this.user.firstName + " " + this.user.lastName,
                 "description": "Login to Portal!",
-                "createdAt": new Date()
+                "createdAt": new Date().toISOString().substring(0, 19)
               };
+              console.log(userLog.createdAt);
       
               this.userLogService.addLoginLog(userLog, this.user.uid).subscribe(() => {
                 this.sessionStorage.store("loggedIn", true);
                 this.sessionStorage.store("user", this.user);
-                this.router.navigate(['/home']);
+                this.router.navigate(['/onboardee']);
               });
             } else {
 
@@ -109,9 +117,10 @@ export class LoginComponent implements OnInit {
                   "uid": 1,
                   "userName": this.user.firstName + " " + this.user.lastName,
                   "description": "Login to Portal!",
-                  "createdAt": new Date()
+                  "createdAt": new Date().toISOString().substring(0, 19)
                 };
-        
+                console.log(userLog.createdAt);
+
                 this.userLogService.addLoginLog(userLog, this.user.uid).subscribe(() => {
                   this.sessionStorage.store("loggedIn", true);
                   this.sessionStorage.store("user", this.user);

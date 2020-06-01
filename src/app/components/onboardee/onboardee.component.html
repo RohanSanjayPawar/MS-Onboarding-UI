@@ -1,4 +1,17 @@
-<h3>MS Onboardees</h3>
+<div class="container">
+    <table>
+        <tr>
+            <td class="left"><h3>MS Onboardees</h3></td>
+            <td class="right"><button mat-raised-button color="primary" (click)="addOnboardee()">Add Onboardee</button></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <mat-form-field class="filter">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Type Filter">
+    </mat-form-field>
+</div>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="uid">
       <th mat-header-cell *matHeaderCellDef> UID </th>
@@ -30,6 +43,11 @@
         <td mat-cell *matCellDef="let element"> {{element.skillSet}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="experience">
+        <th mat-header-cell *matHeaderCellDef> Experience </th>
+        <td mat-cell *matCellDef="let element"> {{element.experience}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="hiringManager">
         <th mat-header-cell *matHeaderCellDef> Hiring Manager </th>
         <td mat-cell *matCellDef="let element"> {{element.hiringManager}} </td>
@@ -50,6 +68,18 @@
         <td mat-cell *matCellDef="let element"> {{element.etaForOnboarding}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef> Edit </th>
+        <td mat-cell *matCellDef="let element"><button class="delete-btn" (click)="edit(element)"><mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon></button></td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <td mat-cell *matCellDef="let element"><button class="delete-btn" (click)="delete(element.uid)"><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button></td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

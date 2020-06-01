@@ -13,6 +13,6 @@ export class UserlogsService {
   }
 
   getAllLogs(uid: number) {
-    return this.http.get("http://localhost:4200/api/user-logs/"+uid);
+    return this.http.get<any[]>("http://localhost:4200/api/user-logs/"+uid);
   }
 }

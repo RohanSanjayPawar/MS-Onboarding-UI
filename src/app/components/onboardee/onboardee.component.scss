@@ -1,3 +1,28 @@
 table {
     width: 100%;
 }
+
+.left {
+    float: left;
+}
+
+.right {
+    padding-top: 15px;
+    padding-right: 10px;
+    float: right;
+}
+
+.delete-btn {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+.filter {
+    padding-left: 10px;
+    width: 30%;
+}
+
