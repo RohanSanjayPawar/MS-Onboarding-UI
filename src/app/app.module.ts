@@ -37,6 +37,9 @@ import { AddOnboardeeComponent } from './components/add-onboardee/add-onboardee.
 import { TrendsComponent } from './components/trends/trends.component';
 import { BarChartComponent } from './components/trends/bar-chart/bar-chart.component';
 import { ProfileChartComponent } from './components/trends/profile-chart/profile-chart.component';
+import { LocationGraphComponent } from './components/trends/location-graph/location-graph.component';
+import { ManagerChartComponent } from './components/trends/manager-chart/manager-chart.component';
+import { ExperienceChartComponent } from './components/trends/experience-chart/experience-chart.component';
 
 const google_oauth_client_id:string = '833115512170-mh1qim32kmkcqv8c2gqtqvgu7no1q7qj.apps.googleusercontent.com';
 let config = new AuthServiceConfig([
@@ -62,7 +65,10 @@ export function provideConfig() {
     AddOnboardeeComponent,
     TrendsComponent,
     BarChartComponent,
-    ProfileChartComponent
+    ProfileChartComponent,
+    LocationGraphComponent,
+    ManagerChartComponent,
+    ExperienceChartComponent
   ],
   imports: [
     BrowserModule,

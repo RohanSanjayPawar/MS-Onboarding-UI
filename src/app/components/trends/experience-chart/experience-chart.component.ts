@@ -1,14 +1,14 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { SessionStorageService } from 'ngx-webstorage';
 import { Chart } from 'chart.js';  
-import { OnboardeeService } from 'src/app/service/onboardee.service';
+import { OnboardeeService } from 'src/app/service/onboardee.service'
 
 @Component({
-  selector: 'app-profile-chart',
-  templateUrl: './profile-chart.component.html',
-  styleUrls: ['./profile-chart.component.scss']
+  selector: 'app-experience-chart',
+  templateUrl: './experience-chart.component.html',
+  styleUrls: ['./experience-chart.component.scss']
 })
-export class ProfileChartComponent implements OnInit {
+export class ExperienceChartComponent implements OnInit {
   myChart:any;
   user: any;
   doughnutChart = [];
@@ -27,27 +27,29 @@ export class ProfileChartComponent implements OnInit {
     private elementRef: ElementRef) { }
 
   ngOnInit() {
+    var map = new Map();
     this.user = this.sessionStorage.retrieve("user");
     this.onboardeeService.getAllOnboardee().subscribe((data) => {
       data.forEach(x => {  
-        for(var i=0;i<x.skillSet.length;i++) {
-          if(x.skillSet[i] === "Java") {
-            this.demand[0]++;
-          } else if(x.skillSet[i] === "Angular") {
-            this.demand[1]++;
-          } else if(x.skillSet[i] === "Spring") {
-            this.demand[2]++;
-          } else if(x.skillSet[i] === "Project Manager") {
-            this.demand[3]++;
-          }
+        if(map.has(x.experience)) {
+          map.set(x.experience, map.get(x.experience) + 1);
+        } else {
+          map.set(x.experience, 1);
         }
         this.total++;
       });
 
-      for(var i=0;i<4;i++) {
+      for (let key of map.keys()) {
+        this.role.push(key);
+        this.demand.push(map.get(key));
+      }
+
+      for(var i=0;i<this.role.length;i++) {
         this.color[i] = this.dynamicColors();
       }
-      let htmlRef = this.elementRef.nativeElement.querySelector(`#canvas1`);
+
+
+      let htmlRef = this.elementRef.nativeElement.querySelector(`#canvas4`);
       this 
       this.doughnutChart.push(new Chart(htmlRef, {  
         type: 'doughnut',  
@@ -56,7 +58,7 @@ export class ProfileChartComponent implements OnInit {
           datasets: [  
             {  
               data: this.demand, 
-              label: "Count", 
+              label: "Experience Level Count", 
               borderColor: 'black',
               backgroundColor: this.color,
               fill: true  
@@ -65,7 +67,7 @@ export class ProfileChartComponent implements OnInit {
         },  
         options: {  
           legend: {  
-            display: true  
+            display: false  
           },  
           scales: {  
             xAxes: [{  

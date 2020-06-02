@@ -124,4 +124,26 @@ export class AddOnboardeeComponent implements OnInit {
       this.dialogRef.close();
     })
   }
+
+  validations() {
+    if(this.data.firstName === "" || this.data.lastName === "" || this.data.webLoginId === "" || this.data.status === "" || this.data.backgroundCheckStatus === "") {
+      return false;
+    }
+
+    if(!this.java && !this.angular && !this.spring && !this.projectManager) {
+      return false;
+    }
+
+    var patt = new RegExp("[0-9]+");
+
+    if(patt.test(this.data.firstName) || patt.test(this.data.lastName) || patt.test(this.data.status) || patt.test(this.data.backgroundCheckStatus)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  demandCheck() {
+    return this.data.demandId > 0;
+  }
 }

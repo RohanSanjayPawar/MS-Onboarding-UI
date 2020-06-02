@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
         });
       } else {
         this.sessionStorage.store("loggedIn", false);
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       }
     });
   }

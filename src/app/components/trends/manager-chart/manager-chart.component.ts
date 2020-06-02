@@ -4,16 +4,16 @@ import { Chart } from 'chart.js';
 import { OnboardeeService } from 'src/app/service/onboardee.service';
 
 @Component({
-  selector: 'app-profile-chart',
-  templateUrl: './profile-chart.component.html',
-  styleUrls: ['./profile-chart.component.scss']
+  selector: 'app-manager-chart',
+  templateUrl: './manager-chart.component.html',
+  styleUrls: ['./manager-chart.component.scss']
 })
-export class ProfileChartComponent implements OnInit {
+export class ManagerChartComponent implements OnInit {
   myChart:any;
   user: any;
-  doughnutChart = [];
-  role = ["Java", "Angular", "Spring", "Project Manager"];  
-  demand = [0, 0, 0, 0];
+  barChart = [];
+  role = [];  
+  demand = [];
   color = [];
   total = 0;
 
@@ -24,33 +24,34 @@ export class ProfileChartComponent implements OnInit {
   constructor(
     private sessionStorage: SessionStorageService,
     private onboardeeService: OnboardeeService,
-    private elementRef: ElementRef) { }
+    private elementRef: ElementRef
+  ) { }
 
   ngOnInit() {
+    var map = new Map();
     this.user = this.sessionStorage.retrieve("user");
     this.onboardeeService.getAllOnboardee().subscribe((data) => {
       data.forEach(x => {  
-        for(var i=0;i<x.skillSet.length;i++) {
-          if(x.skillSet[i] === "Java") {
-            this.demand[0]++;
-          } else if(x.skillSet[i] === "Angular") {
-            this.demand[1]++;
-          } else if(x.skillSet[i] === "Spring") {
-            this.demand[2]++;
-          } else if(x.skillSet[i] === "Project Manager") {
-            this.demand[3]++;
-          }
+        if(map.has(x.hiringManager)) {
+          map.set(x.hiringManager, map.get(x.hiringManager) + 1);
+        } else {
+          map.set(x.hiringManager, 1);
         }
         this.total++;
       });
 
-      for(var i=0;i<4;i++) {
+      for (let key of map.keys()) {
+        this.role.push(key);
+        this.demand.push(map.get(key));
+      }
+
+      for(var i=0;i<this.role.length;i++) {
         this.color[i] = this.dynamicColors();
       }
-      let htmlRef = this.elementRef.nativeElement.querySelector(`#canvas1`);
+      let htmlRef = this.elementRef.nativeElement.querySelector(`#canvas3`);
       this 
-      this.doughnutChart.push(new Chart(htmlRef, {  
-        type: 'doughnut',  
+      this.barChart.push(new Chart(htmlRef, {  
+        type: 'pie',  
         data: {  
           labels: this.role,  
           datasets: [  
@@ -65,7 +66,7 @@ export class ProfileChartComponent implements OnInit {
         },  
         options: {  
           legend: {  
-            display: true  
+            display: true 
           },  
           scales: {  
             xAxes: [{  
@@ -81,25 +82,26 @@ export class ProfileChartComponent implements OnInit {
   }
 
   dynamicColors() {
-    if(this.red + 40 > 255) {
+    if(this.red + 80 > 255) {
       this.red = 63;
     } else {
-      this.red += 40;
+      this.red += 80;
     }
 
-    if(this.blue + 12 > 255) {
+    if(this.blue + 24 > 255) {
       this.blue = 181;
     } else {
-      this.blue += 12;
+      this.blue += 24;
     }
 
-    if(this.green + 18 > 255) {
+    if(this.green + 36 > 255) {
       this.green = 81;
     } else {
-      this.green += 18;
+      this.green += 36;
     }
     
     
     return "rgb(" + this.red + "," + this.green + "," + this.blue + ")";
   };
+
 }

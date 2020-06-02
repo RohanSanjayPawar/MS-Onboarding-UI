@@ -8,6 +8,10 @@ export class DemandService {
 
   constructor(private http: HttpClient) { }
 
+  getDemands() {
+    return this.http.get<any[]>("http://localhost:4200/api/demand/");
+  }
+
   getAllDemands(uid) {
     return this.http.get<any[]>("http://localhost:4200/api/demand/"+uid);
   }

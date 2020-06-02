@@ -10,25 +10,12 @@
           <tr *ngIf="demand">
             <td>
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="First name" [(ngModel)]="data.firstName" name="firstName" required>
+                <input matInput placeholder="First name" [(ngModel)]="data.firstName" name="firstName" pattern="[a-zA-Z]*" required>
               </mat-form-field>
             </td>
             <td>
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Last name" [(ngModel)]="data.lastName" name="lastName" required>
-              </mat-form-field>
-            </td>
-          </tr>
-          <br>
-          <tr *ngIf="demand">
-            <td>
-              <mat-form-field class="example-full-width">
-                <input matInput placeholder="Email" [(ngModel)]="data.webLoginId" name="webLoginId" required>
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field class="example-full-width">
-                <input matInput placeholder="Experience" [(ngModel)]="data.experience" name="experience" required>
+                <input matInput placeholder="Last name" [(ngModel)]="data.lastName" name="lastName" pattern="[a-zA-Z]*" required>
               </mat-form-field>
             </td>
           </tr>
@@ -36,13 +23,26 @@
           <tr *ngIf="demand">
             <td>
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Status" [(ngModel)]="data.status" name="status" required>
+                <input matInput type="email" placeholder="Email" [(ngModel)]="data.webLoginId" name="webLoginId" pattern="[a-zA-Z0-9@.]*" required>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Experience" [(ngModel)]="data.experience" name="experience" pattern="[0-9]*" required>
+              </mat-form-field>
+            </td>
+          </tr>
+          <br>
+          <tr *ngIf="demand">
+            <td>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Status" [(ngModel)]="data.status" name="status" pattern="[a-zA-Z ]*" required>
               </mat-form-field>
             </td>
             <td>
               <mat-form-field class="example-full-width">
                 <input matInput placeholder="Background Check Status" [(ngModel)]="data.backgroundCheckStatus"
-                  name="bgStatus" required>
+                  name="bgStatus" pattern="[a-zA-Z ]*" required>
               </mat-form-field>
             </td>
           </tr>
@@ -51,12 +51,12 @@
             <td>
               <mat-form-field class="example-full-width">
                 <input matInput placeholder="ETA for onboarding" [(ngModel)]="data.etaForOnboarding"
-                  name="etaForOnboarding" required>
+                  name="etaForOnboarding" pattern="[0-9]*" required>
               </mat-form-field>
             </td>
           </tr>
           <br>
-          <tr *ngIf="!edit && demand">
+          <tr [ngStyle]="{'visibility':!edit && demand ? 'visible' : 'hidden'}">
             <td>
               <mat-label>Skills</mat-label>
               <br><br>
@@ -89,8 +89,8 @@
 </div>
 <div class="footer" mat-dialog-actions>
   <button *ngIf="!edit && !demand" mat-raised-button (click)="goBack()" color="primary">GO BACK</button>
-  <button *ngIf="!edit && demand" mat-raised-button (click)="findDemand()" color="primary">FIND DEMAND</button>
-  <button *ngIf="!edit && !demand" mat-raised-button (click)="addOnboardee()" color="primary">ADD</button>
-  <button *ngIf="edit" mat-raised-button (click)="editOnboardee()" color="primary">EDIT</button>
+  <button *ngIf="!edit && demand" [disabled]="!validations()" mat-raised-button (click)="findDemand()" color="primary">FIND DEMAND</button>
+  <button *ngIf="!edit && !demand" [disabled]="!validations() && !demandCheck()" mat-raised-button (click)="addOnboardee()" color="primary">ADD</button>
+  <button *ngIf="edit" mat-raised-button [disabled]="!validations()" (click)="editOnboardee()" color="primary">EDIT</button>
   <button mat-raised-button (click)="close()">CANCEL</button>
 </div>

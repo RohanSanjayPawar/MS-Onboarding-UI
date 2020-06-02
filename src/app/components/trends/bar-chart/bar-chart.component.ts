@@ -28,7 +28,7 @@ export class BarChartComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.sessionStorage.retrieve("user");
-    this.demandService.getAllDemands(this.user.uid).subscribe((data) => {
+    this.demandService.getDemands().subscribe((data) => {
       data.forEach(x => {  
         this.role.push(x.role);  
         this.demand.push(x.total); 

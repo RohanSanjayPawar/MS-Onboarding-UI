@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
     this.authService.signOut();
     this.sessionStorage.store("loggedIn", false);
     this.sessionStorage.store("user", null);
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
     console.log('User signed out.');
   }
 

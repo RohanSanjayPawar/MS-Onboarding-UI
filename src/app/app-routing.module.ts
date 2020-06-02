@@ -8,11 +8,12 @@ import { TrendsComponent } from './components/trends/trends.component';
 
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent, data : {login : false} },
+  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'onboardee', component: OnboardeeComponent },
   { path: 'user-logs', component: UserLogsComponent },
-  { path: 'trends', component: TrendsComponent }
+  { path: 'trends', component: TrendsComponent },
+  { path: '**', component: HomeComponent } 
 ];
 
 @NgModule({
