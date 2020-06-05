@@ -6,6 +6,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 
 export interface Onboardee {
   uid: number;
+  demandUid: number;
   firstName: string;
   lastName: string;
   webLoginId: string;
@@ -62,7 +63,7 @@ export class AddOnboardeeComponent implements OnInit {
             this.spring = true;
           }
 
-          if(data.skillSet[i] === "Project Manager") {
+          if(data.skillSet[i] === "Project Planning") {
             this.projectManager = true;
           }
         }
@@ -88,7 +89,7 @@ export class AddOnboardeeComponent implements OnInit {
     }
 
     if(this.projectManager) {
-      this.skillSet.push("Project Manager");
+      this.skillSet.push("Project Planning");
     }
 
     this.data.skillSet = this.skillSet;
@@ -97,6 +98,7 @@ export class AddOnboardeeComponent implements OnInit {
       if(demands.length === 0) {
         alert("No Jobs Available");
       } else {
+        console.log(demands);
         this.demands = demands;
         this.demand = false;
       }
@@ -115,14 +117,26 @@ export class AddOnboardeeComponent implements OnInit {
     this.data.skillSet = this.skillSet;
     this.data.demandId = this.demandSelected;
     this.onboardeeService.addOnboardee(this.data).subscribe(() => {
-      this.dialogRef.close();
+      var demandUid = 0;
+      
+      for(var i=0;i<this.demands.length;i++) {
+        if(this.demands[i].uid === this.data.demandId) {
+          demandUid = this.demands[i].demandUid;
+          break;
+        }
+      }
+
+      this.demandService.updateDemands(demandUid).subscribe(() => {
+        console.log(demandUid);
+        this.dialogRef.close();
+      });
     })
   }
 
   editOnboardee() {
     this.onboardeeService.updateOnboardee(this.data.uid, this.data).subscribe(() => {
       this.dialogRef.close();
-    })
+    });
   }
 
   validations() {

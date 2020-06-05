@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AddOnboardeeComponent } from './add-onboardee.component';
 
 describe('AddOnboardeeComponent', () => {
@@ -17,9 +16,5 @@ describe('AddOnboardeeComponent', () => {
     fixture = TestBed.createComponent(AddOnboardeeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 });

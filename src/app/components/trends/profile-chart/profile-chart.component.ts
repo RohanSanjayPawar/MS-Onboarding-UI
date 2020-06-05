@@ -12,7 +12,7 @@ export class ProfileChartComponent implements OnInit {
   myChart:any;
   user: any;
   doughnutChart = [];
-  role = ["Java", "Angular", "Spring", "Project Manager"];  
+  role = ["Java", "Angular", "Spring", "Project Planning"];  
   demand = [0, 0, 0, 0];
   color = [];
   total = 0;
@@ -37,7 +37,7 @@ export class ProfileChartComponent implements OnInit {
             this.demand[1]++;
           } else if(x.skillSet[i] === "Spring") {
             this.demand[2]++;
-          } else if(x.skillSet[i] === "Project Manager") {
+          } else if(x.skillSet[i] === "Project Planning") {
             this.demand[3]++;
           }
         }

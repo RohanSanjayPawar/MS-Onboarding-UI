@@ -10,6 +10,10 @@ export class HomeComponent implements OnInit {
 
   private title = "MS Onboarding Portal - Home";
 
+  getTitle() {
+    return this.title;
+  }
+
   constructor(private titleService: Title) { }
 
   public setTitle() {

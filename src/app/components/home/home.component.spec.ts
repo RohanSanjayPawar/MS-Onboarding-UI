@@ -19,7 +19,9 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it(`should have 'MS Onboarding Portal - Home' as title`, async(() => {
+    fixture = TestBed.createComponent(HomeComponent);
+    component = fixture.debugElement.componentInstance;
+    expect(component.getTitle()).toEqual('MS Onboarding Portal - Home');
+  }));
 });

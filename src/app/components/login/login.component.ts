@@ -50,14 +50,14 @@ export class LoginComponent implements OnInit {
       if(data !== []) {
         this.user = data[0];
         var userLog = {
-          "uid": 1,
+          "uid": data[0].uid,
           "userName": this.user.firstName + " " + this.user.lastName,
           "description": "Login to Portal!",
           "createdAt": new Date().toISOString().substring(0, 19)
         };
-        console.log(userLog.createdAt);
+        console.log(userLog);
 
-        this.userLogService.addLoginLog(userLog, this.user.uid).subscribe(() => {
+        this.userLogService.addLoginLog(userLog, data[0].uid).subscribe(() => {
           this.sessionStorage.store("loggedIn", true);
           this.sessionStorage.store("user", this.user);
           this.router.navigate(['/onboardee']);

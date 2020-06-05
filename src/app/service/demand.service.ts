@@ -19,4 +19,12 @@ export class DemandService {
   filterDemands(uid, onboardee) {
     return this.http.put<any[]>("http://localhost:4200/api/demand/"+uid, onboardee);
   }
+
+  updateDemands(uid) {
+    return this.http.put("http://localhost:4200/api/demand/update/"+uid, "");
+  }
+
+  fetchDemandForUID(uid) {
+    return this.http.get<any[]>("http://localhost:4200/api/demand/get/"+uid);
+  }
 }

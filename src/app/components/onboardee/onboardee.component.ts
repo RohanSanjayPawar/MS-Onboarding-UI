@@ -22,6 +22,8 @@ export class OnboardeeComponent implements OnInit {
 
   displayedColumns: string[];
   dataSource: any;
+  user: any;
+  allowed: boolean = true;
 
   constructor(
     private router: Router, 
@@ -42,8 +44,16 @@ export class OnboardeeComponent implements OnInit {
     if(!this.sessionStorage.retrieve("loggedIn")) {
       this.router.navigate(['/home']);
     } else {
+      this.user = this.sessionStorage.retrieve("user");
+      if(this.user.role !== "ADMIN") {
+        this.allowed = false;
+      }
       this.onboardeeService.getAllOnboardee().subscribe((data) => {
-        this.displayedColumns = ['uid', 'firstName', 'lastName',  'webLoginId', 'hiringManager', 'joiningLocation', 'skillSet', 'experience', 'status', 'backgroundCheckStatus', 'etaForOnboarding', 'edit', 'delete'];
+        if(this.user.role !== "ADMIN") {
+          this.displayedColumns = ['uid', 'firstName', 'lastName',  'webLoginId', 'hiringManager', 'joiningLocation', 'skillSet', 'experience', 'status', 'backgroundCheckStatus', 'etaForOnboarding'];
+        } else {
+          this.displayedColumns = ['uid', 'firstName', 'lastName',  'webLoginId', 'hiringManager', 'joiningLocation', 'skillSet', 'experience', 'status', 'backgroundCheckStatus', 'etaForOnboarding', 'edit', 'delete'];
+        }
         console.log(data);
         this.dataSource = new MatTableDataSource<any>(data);
         this.dataSource.paginator = this.paginator;
@@ -64,6 +74,7 @@ export class OnboardeeComponent implements OnInit {
       width: '80%',
       height: '80%', data: {
         uid: 0,
+        demandUid: 0,
         firstName: "",
         lastName: "",
         webLoginId: "",

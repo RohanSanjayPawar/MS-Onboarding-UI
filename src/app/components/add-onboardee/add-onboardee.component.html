@@ -64,8 +64,7 @@
                 <mat-checkbox class="example-margin" [(ngModel)]="angular" name="angular">Angular</mat-checkbox>
                 <mat-checkbox class="example-margin" [(ngModel)]="java" name="java">Java</mat-checkbox>
                 <mat-checkbox class="example-margin" [(ngModel)]="spring" name="spring">Spring</mat-checkbox>
-                <mat-checkbox class="example-margin" [(ngModel)]="projectManager" name="projectManager">Project Manager
-                </mat-checkbox>
+                <mat-checkbox class="example-margin" [(ngModel)]="projectManager" name="projectManager">Project Planning</mat-checkbox>
               </section>
             </td>
           </tr>
@@ -73,10 +72,10 @@
           <tr *ngIf="!edit && !demand">
             <td>
               <mat-form-field class="example-full">
-                <mat-label>Demand</mat-label>
+                <mat-label>Role</mat-label>
                 <mat-select [(ngModel)]="demandSelected" name="demand">
                   <mat-option *ngFor="let demand of demands" [value]="demand.uid">
-                    {{demand.role}}
+                    {{ demand.role }} - {{ demand.hiringManager }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

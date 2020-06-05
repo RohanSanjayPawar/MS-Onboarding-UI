@@ -2,7 +2,7 @@
     <table>
         <tr>
             <td class="left"><h3>MS Onboardees</h3></td>
-            <td class="right"><button mat-raised-button color="primary" (click)="addOnboardee()">Add Onboardee</button></td>
+            <td class="right" *ngIf="allowed"><button mat-raised-button color="primary" (click)="addOnboardee()">Add Onboardee</button></td>
         </tr>
     </table>
 </div>
@@ -14,8 +14,8 @@
 </div>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="uid">
-      <th mat-header-cell *matHeaderCellDef> UID </th>
-      <td mat-cell *matCellDef="let element"> {{element.uid}} </td>
+      <th mat-header-cell *matHeaderCellDef> Serial No. </th>
+      <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
     </ng-container>
 
     <ng-container matColumnDef="firstName">
@@ -68,12 +68,12 @@
         <td mat-cell *matCellDef="let element"> {{element.etaForOnboarding}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="edit">
+    <ng-container matColumnDef="edit" *ngIf="allowed">
         <th mat-header-cell *matHeaderCellDef> Edit </th>
         <td mat-cell *matCellDef="let element"><button class="delete-btn" (click)="edit(element)"><mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon></button></td>
     </ng-container>
 
-    <ng-container matColumnDef="delete">
+    <ng-container matColumnDef="delete" *ngIf="allowed">
         <th mat-header-cell *matHeaderCellDef> Delete </th>
         <td mat-cell *matCellDef="let element"><button class="delete-btn" (click)="delete(element.uid)"><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button></td>
     </ng-container>

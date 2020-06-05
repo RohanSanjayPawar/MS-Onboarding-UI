@@ -18,8 +18,4 @@ describe('ExperienceChartComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });
