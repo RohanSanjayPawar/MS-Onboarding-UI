@@ -70,23 +70,25 @@ export class OnboardeeComponent implements OnInit {
   addOnboardee() {
     var user = this.sessionStorage.retrieve("user");
 
+    var onboardee =  {
+      uid: 0,
+      demandUid: 0,
+      firstName: "",
+      lastName: "",
+      webLoginId: "",
+      skillSet: [],
+      status: "",
+      demandId: 0,
+      backgroundCheckStatus: "",
+      etaForOnboarding: 0,
+      experience: 0,
+      joiningLocation: user.currentOffice,
+      hiringManager: user.firstName + " " + user.lastName
+    }
+
     const dialogRef = this.dialog.open(AddOnboardeeComponent, {
       width: '80%',
-      height: '80%', data: {
-        uid: 0,
-        demandUid: 0,
-        firstName: "",
-        lastName: "",
-        webLoginId: "",
-        skillSet: [],
-        status: "",
-        demandId: 0,
-        backgroundCheckStatus: "",
-        etaForOnboarding: 0,
-        experience: 0,
-        joiningLocation: user.currentOffice,
-        hiringManager: user.firstName + " " + user.lastName
-      }
+      height: '80%', data: onboardee
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -97,7 +99,7 @@ export class OnboardeeComponent implements OnInit {
         var userLog = {
           "uid": 1,
           "userName": user1.firstName + " " + user1.lastName,
-          "description": "Added Onboardee!",
+          "description": "Added Onboardee " + onboardee.firstName + " " + onboardee.lastName + "!",
           "createdAt": new Date().toISOString().substring(0, 19)
         };
         console.log(userLog.createdAt);
@@ -108,9 +110,9 @@ export class OnboardeeComponent implements OnInit {
     });
   }
 
-  delete(uid: number) {
-    console.log(uid);
-    this.onboardeeService.deleteOnboardee(uid).subscribe(() => {
+  delete(onboardee: any) {
+    console.log(onboardee.uid);
+    this.onboardeeService.deleteOnboardee(onboardee.uid).subscribe(() => {
       this.onboardeeService.getAllOnboardee().subscribe((data) => {
         this.dataSource = new MatTableDataSource<any>(data);
 
@@ -118,7 +120,7 @@ export class OnboardeeComponent implements OnInit {
         var userLog = {
           "uid": 1,
           "userName": user.firstName + " " + user.lastName,
-          "description": "Deleted Onboardee "+uid,
+          "description": onboardee.firstName + " " + onboardee.lastName + " has left the MS Team!",
           "createdAt": new Date().toISOString().substring(0, 19)
         };
         console.log(userLog.createdAt);
@@ -144,7 +146,7 @@ export class OnboardeeComponent implements OnInit {
         var userLog = {
           "uid": 1,
           "userName": user1.firstName + " " + user1.lastName,
-          "description": "Updated Onboardee "+user.uid +"!",
+          "description": "Onboardee " + user.firstName + " " + user.lastName + " was updated!",
           "createdAt": new Date().toISOString().substring(0, 19)
         };
         console.log(userLog.createdAt);

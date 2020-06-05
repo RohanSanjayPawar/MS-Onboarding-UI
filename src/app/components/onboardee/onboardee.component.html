@@ -2,7 +2,7 @@
     <table>
         <tr>
             <td class="left"><h3>MS Onboardees</h3></td>
-            <td class="right" *ngIf="allowed"><button mat-raised-button color="primary" (click)="addOnboardee()">Add Onboardee</button></td>
+            <td class="right"><button mat-raised-button color="primary" (click)="addOnboardee()">Add Onboardee</button></td>
         </tr>
     </table>
 </div>
@@ -68,14 +68,14 @@
         <td mat-cell *matCellDef="let element"> {{element.etaForOnboarding}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="edit" *ngIf="allowed">
+    <ng-container matColumnDef="edit">
         <th mat-header-cell *matHeaderCellDef> Edit </th>
         <td mat-cell *matCellDef="let element"><button class="delete-btn" (click)="edit(element)"><mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon></button></td>
     </ng-container>
 
     <ng-container matColumnDef="delete" *ngIf="allowed">
         <th mat-header-cell *matHeaderCellDef> Delete </th>
-        <td mat-cell *matCellDef="let element"><button class="delete-btn" (click)="delete(element.uid)"><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button></td>
+        <td mat-cell *matCellDef="let element"><button class="delete-btn" (click)="delete(element)"><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
