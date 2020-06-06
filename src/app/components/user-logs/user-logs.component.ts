@@ -30,9 +30,17 @@ export class UserLogsComponent implements OnInit {
     this.titleService.setTitle(this.title);
   }
 
+  public getTitle() {
+    return this.title;
+  }
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   ngOnInit() {
+    this.checkLogin();
+  }
+
+  checkLogin() {
     if(!this.sessionStorage.retrieve("loggedIn")) {
       this.router.navigate(['/home']);
     } else {

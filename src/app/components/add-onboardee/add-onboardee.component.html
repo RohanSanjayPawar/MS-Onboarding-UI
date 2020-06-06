@@ -75,7 +75,7 @@
                 <mat-label>Role</mat-label>
                 <mat-select [(ngModel)]="demandSelected" name="demand">
                   <mat-option *ngFor="let demand of demands" [value]="demand.uid">
-                    {{ demand.role }} - {{ demand.hiringManager }}
+                    {{ demand.role }} - {{ demand.hiringManager }} ({{ demand.location }})
                   </mat-option>
                 </mat-select>
               </mat-form-field>

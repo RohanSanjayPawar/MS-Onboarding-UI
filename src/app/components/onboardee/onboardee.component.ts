@@ -41,6 +41,14 @@ export class OnboardeeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.checkLogin();
+  }
+
+  getTitle() {
+    return this.title;
+  }
+
+  checkLogin() {
     if(!this.sessionStorage.retrieve("loggedIn")) {
       this.router.navigate(['/home']);
     } else {
@@ -50,7 +58,7 @@ export class OnboardeeComponent implements OnInit {
       }
       this.onboardeeService.getAllOnboardee().subscribe((data) => {
         if(this.user.role !== "ADMIN") {
-          this.displayedColumns = ['uid', 'firstName', 'lastName',  'webLoginId', 'hiringManager', 'joiningLocation', 'skillSet', 'experience', 'status', 'backgroundCheckStatus', 'etaForOnboarding'];
+          this.displayedColumns = ['uid', 'firstName', 'lastName',  'webLoginId', 'hiringManager', 'joiningLocation', 'skillSet', 'experience', 'status', 'backgroundCheckStatus', 'etaForOnboarding', 'edit'];
         } else {
           this.displayedColumns = ['uid', 'firstName', 'lastName',  'webLoginId', 'hiringManager', 'joiningLocation', 'skillSet', 'experience', 'status', 'backgroundCheckStatus', 'etaForOnboarding', 'edit', 'delete'];
         }

@@ -50,20 +50,20 @@ export class AddOnboardeeComponent implements OnInit {
       if(this.data.firstName !== "") {
         this.edit = true;
         
-        for(var i=0;i<data.skillSet.length;i++) {
-          if(data.skillSet[i] === "Angular") {
+        for(var i=0;i<this.data.skillSet.length;i++) {
+          if(this.data.skillSet[i] === "Angular") {
             this.angular = true;
           }
 
-          if(data.skillSet[i] === "Java") {
+          if(this.data.skillSet[i] === "Java") {
             this.java = true;
           }
 
-          if(data.skillSet[i] === "Spring") {
+          if(this.data.skillSet[i] === "Spring") {
             this.spring = true;
           }
 
-          if(data.skillSet[i] === "Project Planning") {
+          if(this.data.skillSet[i] === "Project Planning") {
             this.projectManager = true;
           }
         }

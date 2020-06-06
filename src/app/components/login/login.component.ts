@@ -30,12 +30,16 @@ export class LoginComponent implements OnInit {
     this.titleService.setTitle(this.title);
   }
 
-  username: any;
-  password: any;
+  username: any = "";
+  password: any = "";
 
-  user_data: any;
+  user_data: any = {};
 
   ngOnInit() {
+    this.checkLogin();
+  }
+
+  checkLogin() {
     this.user = this.sessionStorage.retrieve("user");
     
     this.username = new FormControl('', Validators.compose([Validators.email, Validators.required, Validators.minLength(5)]));

@@ -18,6 +18,10 @@ export class NavbarComponent implements OnInit {
     private sessionStorage: SessionStorageService) { }
 
   ngOnInit() {
+    this.checkLogin();
+  }
+
+  checkLogin() {
     this.isLoggedIn = this.sessionStorage.retrieve("loggedIn");
     this.sessionStorage.observe("loggedIn").subscribe((data) => {
       this.isLoggedIn = data;
