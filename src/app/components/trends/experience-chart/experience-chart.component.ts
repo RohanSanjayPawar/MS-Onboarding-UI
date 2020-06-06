@@ -27,6 +27,10 @@ export class ExperienceChartComponent implements OnInit {
     private elementRef: ElementRef) { }
 
   ngOnInit() {
+    this.makeChart();
+  }
+
+  makeChart() {
     var map = new Map();
     this.user = this.sessionStorage.retrieve("user");
     this.onboardeeService.getAllOnboardee().subscribe((data) => {

@@ -29,6 +29,10 @@ export class LocationGraphComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.makeChart();
+  }
+
+  makeChart() {
     this.user = this.sessionStorage.retrieve("user");
     this.onboardeeService.getAllOnboardee().subscribe((data) => {
       data.forEach(x => {  

@@ -27,6 +27,10 @@ export class BarChartComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.makeChart();
+  }
+
+  makeChart() {
     this.user = this.sessionStorage.retrieve("user");
     this.demandService.getDemands().subscribe((data) => {
       data.forEach(x => {  

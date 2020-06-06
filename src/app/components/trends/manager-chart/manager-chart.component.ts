@@ -28,6 +28,10 @@ export class ManagerChartComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.makeChart();
+  }
+
+  makeChart() {
     var map = new Map();
     this.user = this.sessionStorage.retrieve("user");
     this.onboardeeService.getAllOnboardee().subscribe((data) => {

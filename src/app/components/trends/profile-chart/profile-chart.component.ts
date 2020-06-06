@@ -27,6 +27,10 @@ export class ProfileChartComponent implements OnInit {
     private elementRef: ElementRef) { }
 
   ngOnInit() {
+    this.makeChart();
+  }
+
+  makeChart() {
     this.user = this.sessionStorage.retrieve("user");
     this.onboardeeService.getAllOnboardee().subscribe((data) => {
       data.forEach(x => {  
