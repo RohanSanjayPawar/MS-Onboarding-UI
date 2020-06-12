@@ -46,8 +46,9 @@ export class UserLogsComponent implements OnInit {
     } else {
       var user = this.sessionStorage.retrieve("user");
       this.userlogsService.getAllLogs(user.uid).subscribe((data) => {
-        this.displayedColumns = ['uid', 'userName', 'description', 'createdAt'];
+        this.displayedColumns = ['uid', 'userName', 'description'];
         console.log(data);
+        data = data.sort((a, b) => b.uid - a.uid);
         this.dataSource = new MatTableDataSource<any>(data);
         this.dataSource.paginator = this.paginator;
       });

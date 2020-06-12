@@ -17,7 +17,6 @@ export interface Onboardee {
   demandId: number
   etaForOnboarding: number;
   hiringManager: string;
-  
 }
 
 @Component({
@@ -110,6 +109,7 @@ export class AddOnboardeeComponent implements OnInit {
   }
 
   close(): void {
+    this.sessionStorage.store("changed", false);
     this.dialogRef.close();
   }
 
@@ -135,6 +135,7 @@ export class AddOnboardeeComponent implements OnInit {
 
   editOnboardee() {
     this.onboardeeService.updateOnboardee(this.data.uid, this.data).subscribe(() => {
+      this.sessionStorage.store("changed", true);
       this.dialogRef.close();
     });
   }
