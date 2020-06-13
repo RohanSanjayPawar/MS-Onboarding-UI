@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { OnboardeeService } from 'src/app/service/onboardee.service';
 import { DemandService } from 'src/app/service/demand.service';
 import { SessionStorageService } from 'ngx-webstorage';
@@ -45,6 +46,7 @@ export class AddOnboardeeComponent implements OnInit {
     private onboardeeService: OnboardeeService,
     private sessionStorage: SessionStorageService,
     private demandService: DemandService,
+    private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: Onboardee) {
       if(this.data.firstName !== "") {
         this.edit = true;
@@ -95,7 +97,9 @@ export class AddOnboardeeComponent implements OnInit {
     var user = this.sessionStorage.retrieve("user");
     this.demandService.filterDemands(user.uid, this.data).subscribe((demands) => {
       if(demands.length === 0) {
-        alert("No Jobs Available");
+        this._snackBar.open('No Demands found for the onboardee', 'Go Back', {
+          duration: 2000,
+        });
       } else {
         console.log(demands);
         this.demands = demands;
@@ -128,6 +132,7 @@ export class AddOnboardeeComponent implements OnInit {
 
       this.demandService.updateDemands(demandUid).subscribe(() => {
         console.log(demandUid);
+        this.sessionStorage.store("changed", true)
         this.dialogRef.close();
       });
     })

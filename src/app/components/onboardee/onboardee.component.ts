@@ -105,7 +105,7 @@ export class OnboardeeComponent implements OnInit {
       this.onboardeeService.getAllOnboardee().subscribe((data) => {
         data = data.sort((a, b) => b.uid - a.uid);
         this.dataSource = new MatTableDataSource<any>(data);
-        if (onboardee.firstName !== "") {
+        if(this.sessionStorage.retrieve("changed")) {
           var user1 = this.sessionStorage.retrieve("user");
           var userLog = {
             "uid": 1,

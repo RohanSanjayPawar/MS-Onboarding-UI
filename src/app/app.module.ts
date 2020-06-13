@@ -19,7 +19,8 @@ import {
   MatSelectModule,
   MatCheckboxModule,
   MatTabsModule,
-  MatListModule } from '@angular/material';
+  MatListModule,
+  MatSnackBarModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
@@ -93,6 +94,7 @@ export function provideConfig() {
     MatSelectModule,
     MatFormFieldModule,
     MatOptionModule,
+    MatSnackBarModule,
     FormsModule,
     HttpClientModule,
     SocialLoginModule,

@@ -2,14 +2,14 @@
     <table>
         <tr>
             <td class="left"><h3>MS Onboardees</h3></td>
-            <td class="right"><button mat-raised-button color="primary" (click)="addOnboardee()">Add Onboardee</button></td>
+            <td class="right"><button mat-raised-button color="primary" (click)="addOnboardee()">ADD ONBOARDEE</button></td>
         </tr>
     </table>
 </div>
 <div>
     <mat-form-field class="filter">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Type Filter">
+        <mat-label class="input">Filter</mat-label>
+        <input class="input" matInput (keyup)="applyFilter($event)" placeholder="Type Filter">
     </mat-form-field>
 </div>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
