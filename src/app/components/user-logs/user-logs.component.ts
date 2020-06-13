@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SessionStorageService } from 'ngx-webstorage';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserlogsService } from 'src/app/service/userlogs.service';
 
@@ -35,6 +36,8 @@ export class UserLogsComponent implements OnInit {
   }
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
 
   ngOnInit() {
     this.checkLogin();
@@ -51,6 +54,7 @@ export class UserLogsComponent implements OnInit {
         data = data.sort((a, b) => b.uid - a.uid);
         this.dataSource = new MatTableDataSource<any>(data);
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
     }
     this.setTitle();

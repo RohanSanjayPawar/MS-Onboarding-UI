@@ -24,6 +24,10 @@ export class DemandService {
     return this.http.put("http://localhost:4200/api/demand/update/"+uid, "");
   }
 
+  deleteOnboardee(uid) {
+    return this.http.put("http://localhost:4200/api/demand/delete-onboardee/"+uid, "");
+  }
+
   fetchDemandForUID(uid) {
     return this.http.get<any[]>("http://localhost:4200/api/demand/get/"+uid);
   }

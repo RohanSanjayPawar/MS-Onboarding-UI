@@ -147,6 +147,11 @@ export class AddOnboardeeComponent implements OnInit {
     this.onboardeeService.updateOnboardee(this.data.uid, this.data).subscribe(() => {
       this.sessionStorage.store("changed", true);
       this.dialogRef.close();
+    }, (error) => {
+      console.log(error);
+      this._snackBar.open('Onboardee details could not be updated! Please check the information!', 'Go Back', {
+        duration: 2000,
+      });
     });
   }
 

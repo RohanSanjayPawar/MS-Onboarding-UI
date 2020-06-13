@@ -5,10 +5,12 @@ import { Router } from '@angular/router';
 import { SessionStorageService } from 'ngx-webstorage';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 import { OnboardeeService } from 'src/app/service/onboardee.service';
 import { MatDialog } from '@angular/material';
 import { AddOnboardeeComponent, Onboardee } from '../add-onboardee/add-onboardee.component';
 import { UserlogsService } from 'src/app/service/userlogs.service';
+import { DemandService } from 'src/app/service/demand.service';
 
 @Component({
   selector: 'app-onboardee',
@@ -29,12 +31,14 @@ export class OnboardeeComponent implements OnInit {
     private router: Router,
     private sessionStorage: SessionStorageService,
     private onboardeeService: OnboardeeService,
+    private demandService: DemandService,
     private titleService: Title,
     private userLogService: UserlogsService,
     public dialog: MatDialog
   ) { }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public setTitle() {
     this.titleService.setTitle(this.title);
@@ -66,6 +70,7 @@ export class OnboardeeComponent implements OnInit {
         data = data.sort((a, b) => b.uid - a.uid);
         this.dataSource = new MatTableDataSource<any>(data);
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
     }
     this.setTitle();
@@ -105,7 +110,7 @@ export class OnboardeeComponent implements OnInit {
       this.onboardeeService.getAllOnboardee().subscribe((data) => {
         data = data.sort((a, b) => b.uid - a.uid);
         this.dataSource = new MatTableDataSource<any>(data);
-        if(this.sessionStorage.retrieve("changed")) {
+        if (this.sessionStorage.retrieve("changed")) {
           var user1 = this.sessionStorage.retrieve("user");
           var userLog = {
             "uid": 1,
@@ -118,6 +123,7 @@ export class OnboardeeComponent implements OnInit {
           });
         }
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
     });
   }
@@ -138,7 +144,21 @@ export class OnboardeeComponent implements OnInit {
         };
         console.log(userLog.createdAt);
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         this.userLogService.addLoginLog(userLog, user.uid).subscribe(() => {
+          this.demandService.getDemands().subscribe((demands) => {
+            var demandUid = 0;
+
+            for (var i = 0; i < demands.length; i++) {
+              if (demands[i].uid === onboardee.demandId) {
+                demandUid = demands[i].demandUid;
+                break;
+              }
+            }
+
+            this.demandService.deleteOnboardee(demandUid).subscribe(() => {
+            });
+          })
         });
       });
     });
@@ -151,7 +171,7 @@ export class OnboardeeComponent implements OnInit {
       width: '80%',
       height: '80%', data: user
     });
-    
+
 
     dialogRef.afterClosed().subscribe(() => {
       console.log('The dialog was closed');
@@ -159,7 +179,7 @@ export class OnboardeeComponent implements OnInit {
         data = data.sort((a, b) => b.uid - a.uid);
         this.dataSource = new MatTableDataSource<any>(data);
         var user1 = this.sessionStorage.retrieve("user");
-        if(this.sessionStorage.retrieve("changed")) {
+        if (this.sessionStorage.retrieve("changed")) {
           var userLog = {
             "uid": 1,
             "userName": user1.firstName + " " + user1.lastName,
@@ -168,10 +188,12 @@ export class OnboardeeComponent implements OnInit {
           };
           console.log(userLog.createdAt);
           this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
           this.userLogService.addLoginLog(userLog, user1.uid).subscribe(() => {
           });
         } else {
           this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         }
       });
     });
