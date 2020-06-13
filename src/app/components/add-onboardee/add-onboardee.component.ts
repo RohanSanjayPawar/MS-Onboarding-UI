@@ -135,6 +135,11 @@ export class AddOnboardeeComponent implements OnInit {
         this.sessionStorage.store("changed", true)
         this.dialogRef.close();
       });
+    }, (error) => {
+      console.log(error);
+      this._snackBar.open('Onboardee could not be added to the system! Please check the information!', 'Go Back', {
+        duration: 2000,
+      });
     })
   }
 
